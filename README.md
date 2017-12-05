@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ScreenStaring/recharge-api.svg?branch=master)](https://travis-ci.org/ScreenStaring/recharge-api)
 
-Ruby client for [ReCharge Payments](https://rechargepayments.com/developers)
+Ruby client for [ReCharge Payments'](https://rechargepayments.com/developers)
 recurring payments API for Shopify.
 
 ## Installation
@@ -64,12 +64,10 @@ end
 
 For complete documentation refer to the API docs: rdoc.info/gems/recharge-api
 
-## Author
-
-© 2017 [ScreenStaring](http://screenstaring.com). Screen-staring, that's what we do.
-
-help [AT] screenstaring.com.
-
 ## License
 
 Released under the MIT License: www.opensource.org/licenses/MIT
+
+---
+
+Made by [ScreenStaring](http://screenstaring.com)

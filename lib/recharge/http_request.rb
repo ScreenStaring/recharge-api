@@ -48,8 +48,9 @@ module Recharge
     end
 
     def date_param(date)
-      # FIXME: ReCharge doesn't accept 8601, 500s on zone specifier
-      date.respond_to?(:iso8601) ? date.iso8601 : date
+      # ReCharge doesn't accept 8601, 500s on zone specifier
+      # date.respond_to?(:iso8601) ? date.iso8601 : date
+      date.respond_to?(:strftime) ? date.strftime("%Y-%m-%dT%H:%M:%S") : date
     end
 
     private
@@ -66,15 +67,9 @@ module Recharge
       connection.start do |http|
         res = http.request(req)
         data = res["Content-Type"] == "application/json" ? parse_json(res.body) : {}
-        meta = { "id" => res["X-Request-Id"], "limit" => res["X-Recharge-Limit"] }
+        data["meta"] = { "id" => res["X-Request-Id"], "limit" => res["X-Recharge-Limit"] }
 
-        if data.is_a?(Array)
-          data.each { |d| d["meta"] = meta }
-        else
-          data["meta"] = meta
-        end
-
-        return data if res.code[0] == "2"
+        return data if res.code[0] == "2" && !data["warning"] && !data["error"]
 
         message = data["warning"] || data["error"] || "#{res.code} - #{res.message}"
         raise RequestError.new(message, res.code, data["meta"], data["errors"])
@@ -100,15 +95,29 @@ module Recharge
       @request
     end
 
-    def raise_error!(res, data)
-    end
-
     def parse_json(s)
       JSON.parse(s)
     rescue JSON::ParserError => e
       raise Error, "failed to parse JSON response: #{e}"
     end
 
+    #
+    # Make a count request to the included/extended class' endpoint
+    #
+    # === Arguments
+    #
+    # [options (Hash)] Optional arguments to filter the count on.
+    #
+    # See the appropriate count call in {ReCharge's documentation}[https://developer.rechargepayments.com/] for valid options.
+    #
+    # === Returns
+    #
+    # +Fixnum+ of the resulting count
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     module Count
       include HTTPRequest
 
@@ -117,6 +126,23 @@ module Recharge
       end
     end
 
+    #
+    # Create an new record for the included/extended entity
+    #
+    # === Arguments
+    #
+    # [data (Hash)] New record's attributes
+    #
+    # See the appropriate create call in {ReCharge's documentation}[https://developer.rechargepayments.com/] for valid attributes
+    #
+    # === Returns
+    #
+    # An instance of the created entity
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     module Create
       include HTTPRequest
 
@@ -125,6 +151,21 @@ module Recharge
       end
     end
 
+    #
+    # Delete a record for included/extended entity
+    #
+    # === Arguments
+    #
+    # [id (Fixnum)] ID of the record to delete
+    #
+    # === Returns
+    #
+    # An instance of the deleted entity
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     module Delete
       include HTTPRequest
 
@@ -143,11 +184,30 @@ module Recharge
       end
     end
 
+    #
+    # Retrieve a page of records for the included/extended class'
+    #
+    # === Arguments
+    #
+    # [options (Hash)] Optional arguments to filter the result set on.
+    #
+    # In most cases +:page+ and +:limit+ are accepted but see
+    # the appropriate call in {ReCharge's documentation}[https://developer.rechargepayments.com/] for valid options.
+    #
+    # === Returns
+    #
+    # +Array+ of record instances
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     module List
       include HTTPRequest
 
       def list(options = nil)
-        (GET(self::PATH, options)[self::COLLECTION] || []).map { |data| new(data) }
+        data = GET(self::PATH, options)
+        (data[self::COLLECTION] || []).map { |d| new(d.merge("meta" => data["meta"])) }
       end
     end
 

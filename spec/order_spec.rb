@@ -79,7 +79,7 @@ RSpec.describe Recharge::Order do
       time = Time.new
 
       expect(described_class).to receive(:POST)
-      	                           .with("/orders/#{order.id}/change_date", :shipping_date => time.iso8601)
+      	                           .with("/orders/#{order.id}/change_date", :shipping_date => format_time(time))
                                    .and_return("order" => { "id" => 1 })
 
 
@@ -106,11 +106,11 @@ RSpec.describe Recharge::Order do
         time = Time.now
 
         expect(described_class).to receive(:GET)
-      	                             .with(@path, param => time.iso8601)
+      	                             .with(@path, param => format_time(time))
                                      .and_return(@retval).twice
 
         expect(described_class.count(param => time)).to eq 1
-        expect(described_class.count(param => time.iso8601)).to eq 1
+        expect(described_class.count(param => format_time(time))).to eq 1
       end
     end
   end

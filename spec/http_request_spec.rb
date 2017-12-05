@@ -225,14 +225,16 @@ RSpec.describe Recharge::HTTPRequest::List do
     end
 
     it "returns an array of instances of the receiving class" do
+      meta = { "id" => "X123", "limit" => "0/40" }
       result = [
-        FooList.new("name" => "sshaw"),
-        FooList.new("name" => "fofinha")
+        FooList.new("name" => "sshaw", "meta" => meta),
+        FooList.new("name" => "fofinha", "meta" => meta)
       ]
 
       expect(FooList).to receive(:GET)
       	                   .with(FooList::PATH, nil)
                            .and_return(
+                             "meta" => meta,
                              FooList::COLLECTION => [
                                result[0].args,
                                result[1].args

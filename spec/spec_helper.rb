@@ -5,10 +5,17 @@ require "json"
 require "rspec"
 require "time"
 require "webmock/rspec"
-require "erb_test_fixture"
 
-RSpec.configure { |c| c.include ERBTestFixture }
 Recharge.api_key = "XXX"
+TIME_INSTANCES = [Time.now, Date.today, DateTime.now].freeze
+
+RSpec.configure do |c|
+  c.include Module.new {
+    def format_time(t)
+      t.strftime("%Y-%m-%dT%H:%M:%S")
+    end
+  }
+end
 
 RSpec.shared_examples_for "a method that requires an id" do
   it "requires an id argument" do
@@ -17,6 +24,8 @@ RSpec.shared_examples_for "a method that requires an id" do
     end
   end
 end
+
+
 
 RSpec::Matchers.define :define_const do |name|
   match do |klass|

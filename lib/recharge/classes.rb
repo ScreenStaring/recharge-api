@@ -58,8 +58,12 @@ class2 "Recharge", JSON.parse(<<-END) do
             "price":100.0,
             "properties":[],
             "quantity":1,
+            "shopify_product_id": "1255183683",
             "shopify_variant_id":"3844924611",
             "sku":"",
+            "title": "Milk  10% Off Auto renew",
+            "variant_title": "a / b",
+            "vendor": "Example Storeeeeeee",
             "subscription_id":14562
          }
       ],
@@ -192,15 +196,26 @@ END
   def meta
     @meta ||= {}
   end
+
+  private
+
+  def self.instance(data)
+    args = data[self::SINGLE]
+    args["meta"] = data["meta"]
+    new(args)
+  end
 end
 
 module Recharge
   module Persistable  # :nodoc:
     def save
+      data = to_h
+      data.delete("id")
+
       if id
-        self.class.update(id, to_h)
+        self.class.update(id, data)
       else
-        self.id = self.class.create(to_h).id
+        self.id = self.class.create(data).id
       end
     end
   end
@@ -213,8 +228,17 @@ module Recharge
     extend HTTPRequest::Get
     extend HTTPRequest::Update
 
+    #
+    # Persist the updated address
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     def save
-      self.class.update(id, to_h)
+      data = to_h
+      data.delete("id")
+      self.class.update(id, data)
     end
 
     # Validate an address
@@ -223,16 +247,16 @@ module Recharge
     #
     # [data (Hash)] Address to validate, see: https://developer.rechargepayments.com/?shell#validate-address
     #
+    # === Returns
+    #
+    # [Hash] Validated and sometimes updated address
+    #
     # === Errors
     #
     # Recharge::ConnectionError, Recharge::RequestError
     #
     # If the address is invalid a Recharge::RequestError is raised. The validation
     # errors can be retrieved via Recharge::RequestError#errors
-    #
-    # === Returns
-    #
-    # [Hash] Validated and sometimes updated address
     #
     def self.validate(data)
       POST(join("validate"), data)
@@ -268,7 +292,12 @@ module Recharge
     #
     def self.addresses(id)
       id_required!(id)
-      (GET(join(id, Address::COLLECTION))[Address::COLLECTION] || []).map { |data| Address.new(data) }
+      data = GET(join(id, Address::COLLECTION))
+      (data[Address::COLLECTION] || []).map do |d|
+        address = Address.new(d)
+        address.meta = data["meta"]
+        address
+      end
     end
 
     # Create a new address
@@ -278,17 +307,20 @@ module Recharge
     # [id (Fixnum)] Customer ID
     # [address (Hash)] Address attributes, see: https://developer.rechargepayments.com/?shell#create-address
     #
-    # === Errors
-    #
-    # Recharge::ConnectionError, Recharge::RequestError
-    #
     # === Returns
     #
     # [Recharge::Address] The created address
     #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
     def self.create_address(id, address)
       id_required!(id)
-      Address.new(POST(join(id, Address::COLLECTION), address)[Address::SINGLE])
+      data = POST(join(id, Address::COLLECTION), address)
+      address = Address.new(data[Address::SINGLE])
+      address.meta = data["meta"]
+      address
     end
   end
 
@@ -307,12 +339,12 @@ module Recharge
 
     def self.change_next_charge_date(id, date)
       path = join(id, "change_next_charge_date")
-      POST(path, :next_charge_date => date_param(date))[SINGLE].map { |data| new(data) }
+      instance(POST(path, :next_charge_date => date_param(date)))
     end
 
     def self.skip(id, subscription_id)
       path = join(id, "skip")
-      POST(path, :subscription_id => subscription_id)[SINGLE].map { |data| new(data) }
+      instance(POST(path, :subscription_id => subscription_id))
     end
   end
 
@@ -331,12 +363,13 @@ module Recharge
 
     def self.change_date(id, date)
       id_required!(id)
-      new(POST(join(id, "change_date"), :shipping_date => date_param(date))[SINGLE])
+      instance(POST(join(id, "change_date"), :shipping_date => date_param(date)))
     end
 
     def self.update_shopify_variant(id, old_variant_id, new_varient_id)
+      id_required!(id)
       path = join(id, "update_shopify_variant", old_variant_id)
-      new(POST(path, :new_shopify_variant_id => new_varient_id)[SINGLE])
+      instance(POST(path, :new_shopify_variant_id => new_varient_id))
     end
   end
 
@@ -352,24 +385,59 @@ module Recharge
 
     include Persistable
 
+    #
+    # Activate a subscription
+    #
+    # === Arguments
+    #
+    # [id (Integer)] ID of subscription to cancel
+    #
+    # === Returns
+    #
+    # [Recharge::Subscription] The activated subscription
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
+    # If the subscription was already activated a Recharge::RequestError will be raised
+    #
     def self.activate(id)
-      # TODO: same response as cancel?
       id_required!(id)
-      new(POST(join(id, "activate")))
+      instance(POST(join(id, "activate"), :status => "active"))
     end
 
+    #
+    # Cancel a subscription
+    #
+    # === Arguments
+    #
+    # [id (Integer)] ID of subscription to cancel
+    # [reason (String)] Reason for the cancellation
+    #
+    # === Returns
+    #
+    # [Recharge::Subscription] The canceled subscription
+    #
+    # === Errors
+    #
+    # Recharge::ConnectionError, Recharge::RequestError
+    #
+    # If the subscription was already canceled a Recharge::RequestError will be raised
+    #
     def self.cancel(id, reason)
-      # TODO: check response structure, e.g., "message" param not def'd in Subscription
-      new(POST(join(id, "cancel"), :cancellation_reason => reason))
+      id_required!(id)
+      instance(POST(join(id, "cancel"), :cancellation_reason => reason))
     end
 
     def self.set_next_charge_date(id, date)
-      POST(join(id, "set_next_charge_date"), :date => date_param(date))[SINGLE]
+      id_required!(id)
+      instance(POST(join(id, "set_next_charge_date"), :date => date_param(date)))
     end
 
     def self.list(options = nil)
       #options[:status] = options[:status].upcase if options[:status]
-      super(convert_date_params(:created_at, :created_at_max, :updated_at, :updated_at_max))
+      super(convert_date_params(options, :created_at, :created_at_max, :updated_at, :updated_at_max))
     end
   end
 

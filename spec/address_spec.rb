@@ -19,4 +19,23 @@ RSpec.describe Recharge::Address do
       }
     end
   end
+
+  describe ".validate" do
+    it "makes a POST request to /addresses/validate with the given params" do
+      data = { :city => "Terminal Land" }
+      expect(described_class).to receive(:POST).with("/addresses/validate", data)
+      described_class.validate(data)
+    end
+  end
+
+  describe "#save" do
+    it "updates the record" do
+      address = described_class.new(:id => 1, :city => "Terminal Land")
+      data = address.to_h
+      data.delete("id")
+
+      expect(described_class).to receive(:update).with(1, data)
+      address.save
+    end
+  end
 end
