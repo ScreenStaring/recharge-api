@@ -199,9 +199,9 @@ END
 
   private
 
-  def self.instance(data)
-    args = data[self::SINGLE]
-    args["meta"] = data["meta"]
+  def self.instance(response)
+    args = response[self::SINGLE]
+    args["meta"] = response["meta"]
     new(args)
   end
 end
