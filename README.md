@@ -42,8 +42,6 @@ ReCharge::Subscription.update(id, data)
 subscription = ReCharge::Subscription.new(data)
 subscription.save
 
-ReCharge::Subscription.create(data)
-
 order1 = ReCharge::Order.get(123123)
 order1.line_items.each do |li|
   p li.title
