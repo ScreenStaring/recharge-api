@@ -64,15 +64,26 @@ For complete documentation refer to the API docs: http://rdoc.info/gems/recharge
 
 ## Rake Tasks for Webhook Management
 
-Requiring `recharge/tasks` will include several Rake tasks for webhook management.
-All tasks require `RECHARGE_API_KEY` be set.
+Add the following to your `Rakefile`:
 
-The hooks are:
+```rb
+require "recharge/tasks"
+```
+
+This will add the following tasks:
 
   * `recharge:hook:create` - create webhook `HOOK` to be sent to `CALLBACK`
   * `recharge:hooks:delete` - delete the webhook(s) given by `ID`
   * `recharge:hooks:delete_all` - delete all webhooks
   * `recharge:hooks:list` - list webhooks
+
+All tasks require `RECHARGE_API_KEY` be set.
+
+For example, to create a hook run the following:
+
+```
+rake recharge:hooks:create RECHARGE_API_KEY=YOURKEY HOOK=subscription/created CALLBACK=https://example.com/callback
+```
 
 ## License
 

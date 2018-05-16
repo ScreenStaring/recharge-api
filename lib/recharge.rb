@@ -11,7 +11,8 @@ module Recharge
   ConnectionError = Class.new(Error)
 
   #
-  # Raised when a non-2XX HTTP response is returned
+  # Raised when a non-2XX HTTP response is returned or a response with
+  # an error or warning property
   #
   class RequestError < Error
     attr_accessor :errors

@@ -185,7 +185,7 @@ module Recharge
     end
 
     #
-    # Retrieve a page of records for the included/extended class'
+    # Retrieve a page of records for the included/extended class' endpoint
     #
     # === Arguments
     #
