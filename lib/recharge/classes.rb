@@ -194,6 +194,26 @@ class2 "Recharge", JSON.parse(<<-END) do
     "company":"bootstrap",
     "phone":"3103103101",
     "country":"United States"
+  },
+  "discount":{
+    "id": 3748296,
+    "code": "Discount1",
+    "value": 12,
+    "ends_at": "2019-12-15T00:00:00",
+    "starts_at": "2018-05-16T00:00:00",
+    "status": "enabled",
+    "usage_limit": 10,
+    "applies_to_id": null,
+    "discount_type": "percentage",
+    "applies_to": null,
+    "applies_to_resource": null,
+    "times_used": 0,
+    "duration": "usage_limit",
+    "duration_usage_limit": 10,
+    "applies_to_product_type": "ALL",
+    "created_at": "2018-04-25T14:32:39",
+    "updated_at": "2018-05-04T13:33:53",
+    "once_per_customer": false
   }
 }
 END
@@ -354,6 +374,13 @@ module Recharge
       path = join(id, "skip")
       instance(POST(path, :subscription_id => subscription_id))
     end
+  end
+
+  class Discount
+    PATH = "/discounts".freeze
+    SINGLE = "discount".freeze
+
+    extend HTTPRequest::Create
   end
 
   class Order
