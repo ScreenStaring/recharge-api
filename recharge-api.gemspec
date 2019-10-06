@@ -20,8 +20,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "class2", "~> 0.3.0"
+  # Keep this until we can upgrade class2
+  # We don't upgrade yet because versions > 3 default to Symbol keys
+  spec.add_dependency "activesupport", "< 6"
   spec.add_development_dependency "webmock", "~> 3.0"
-  spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
