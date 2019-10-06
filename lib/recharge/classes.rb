@@ -13,19 +13,24 @@ class2 "Recharge", JSON.parse(<<-END) do
         "updated_at":"2017-02-28 20:31:29",
         "next_charge_scheduled_at":"2017-04-01T00:00:00",
         "cancelled_at":null,
+        "is_skippable": true,
+        "is_swappable": true,
         "product_title":"Sumatra Coffee",
         "price":12,
         "quantity":1,
+        "recharge_product_id": 518676,
         "status":"ACTIVE",
         "shopify_product_id":1255183683,
         "shopify_variant_id":3844924611,
+        "sku_override": false,
         "sku":null,
         "order_interval_unit":"day",
         "order_interval_frequency":"30",
         "charge_interval_frequency":"30",
         "order_day_of_month":null,
         "order_day_of_week":null,
-        "properties": []
+        "properties": [],
+        "variant_title": "Milk - a / b"
      },
   "charge":
     {
@@ -108,7 +113,10 @@ class2 "Recharge", JSON.parse(<<-END) do
         "billing_country": "United States",
         "billing_phone": "3103843698",
         "processor_type": null,
-        "status": "FOO"
+        "status": "FOO",
+        "stripe_customer_token": "123123",
+        "paypal_customer_token": "123123",
+        "braintree_customer_token": "123123"
     },
   "order": {
      "id":7271806,

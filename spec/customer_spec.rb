@@ -35,7 +35,10 @@ RSpec.describe Recharge::Customer do
         "billing_country" => "USA",
         "billing_phone" => "5555551213",
         "processor_type" => "stripe",
-        "status" => "X"
+        "status" => "X",
+        "stripe_customer_token" => "stripetok",
+        "paypal_customer_token" => "pptok",
+        "braintree_customer_token" => "bttok"
       }
 
       sub = described_class.new(data)
