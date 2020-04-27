@@ -8,13 +8,21 @@ class2 "Recharge", JSON.parse(<<-END) do
      {
         "id":10101,
         "address_id":178918,
+        "analytics_data": {},
         "customer_id":1438,
+        "cancellation_reason": "$$$$",
+        "cancellation_reason_comments": "",
+        "cancelled_at":"2017-02-28T20:31:29",
+        "charge_interval_frequency": "3",
         "created_at":"2017-02-28T20:31:29",
         "updated_at":"2017-02-28 20:31:29",
         "next_charge_scheduled_at":"2017-04-01T00:00:00",
         "cancelled_at":null,
+        "has_queued_charges": 1,
         "is_skippable": true,
         "is_swappable": true,
+        "is_prepaid": false,
+        "max_retries_reached": 0,
         "product_title":"Sumatra Coffee",
         "price":12,
         "quantity":1,
@@ -35,6 +43,7 @@ class2 "Recharge", JSON.parse(<<-END) do
   "charge":
     {
       "address_id":178918,
+      "analytics_data": {},
       "billing_address":{
          "address1":"3030 Nebraska Avenue",
          "address2":"",
@@ -55,11 +64,13 @@ class2 "Recharge", JSON.parse(<<-END) do
       "customer_hash":null,
       "customer_id":10101,
       "first_name":"Mike",
+      "has_uncommited_changes": false,
       "id":1843,
       "last_name":"Flynn",
       "line_items":[
          {
             "grams":0,
+            "images": {},
             "price":100.0,
             "properties":[],
             "quantity":1,
@@ -72,6 +83,9 @@ class2 "Recharge", JSON.parse(<<-END) do
             "subscription_id":14562
          }
       ],
+      "note": "blah blah",
+      "note_attributes": [],
+      "processor_name": "foo",
       "processed_at":"2014-11-20T00:00:00",
       "scheduled_at":"2014-11-20T00:00:01",
       "shipments_count":null,
@@ -87,10 +101,20 @@ class2 "Recharge", JSON.parse(<<-END) do
          "province":"California",
          "zip":"90404"
       },
+      "shipping_lines": [],
       "shopify_order_id":"281223307",
       "status":"SUCCESS",
       "total_price":446.00,
-      "updated_at":"2016-09-05T09:19:29"
+      "updated_at":"2016-09-05T09:19:29",
+      "tax_lines": 0,
+      "total_discounts": "0.0",
+      "total_line_items_price": "12.00",
+      "total_price": "12.00",
+      "total_refunds": null,
+      "total_tax": 0,
+      "total_weight": 4536,
+      "transaction_id": "cch_1Du2QpJ2iqHvZRd18RyqoPvc",
+      "type": "RECURRING"
     },
   "customer":
      {
