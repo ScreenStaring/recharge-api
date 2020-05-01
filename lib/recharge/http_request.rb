@@ -56,7 +56,7 @@ module Recharge
     private
 
     def request(req, data = {})
-      req[TOKEN_HEADER] = ReCharge.api_key || ""
+      req[TOKEN_HEADER] = ReCharge.api_key || ENV["RECHARGE_API_KEY"] || ""
       req["User-Agent"] = USER_AGENT
 
       if req.request_body_permitted? && data && data.any?
