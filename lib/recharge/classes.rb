@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "json"
 require "class2"
 require "recharge/http_request"
@@ -200,11 +202,49 @@ class2 "Recharge", JSON.parse(<<-END) do
         "country":"United States"
      }
   },
-  "webhook":
-    {
-        "id":6,
-        "address":"https://request.in/foo",
-        "topic":"order/create"
+  "metafield": {
+    "created_at": "2018-11-05T12:59:30",
+    "description": "desc lorem ipsum",
+    "id": 15,
+    "key": "marjan",
+    "namespace": "nmsp2c",
+    "owner_id": 17868054,
+    "owner_resource": "customer",
+    "updated_at": "2018-11-05T15:48:42",
+    "value": "5",
+    "value_type": "integer"
+  },
+  "product": {
+    "collection_id": null,
+    "created_at": "2019-11-07T11:36:19",
+    "discount_amount": 15.0,
+    "discount_type": "percentage",
+    "handle": null,
+    "id": 1327844,
+    "images": {},
+    "product_id": 4354268856408,
+    "shopify_product_id": 4354268856408,
+    "subscription_defaults": {
+      "charge_interval_frequency": 4,
+      "cutoff_day_of_month": null,
+      "cutoff_day_of_week": null,
+      "expire_after_specific_number_of_charges": null,
+      "modifiable_properties": [],
+      "number_charges_until_expiration": null,
+      "order_day_of_month": 0,
+      "order_day_of_week": null,
+      "order_interval_frequency": 4,
+      "order_interval_frequency_options": [],
+      "order_interval_unit": "month",
+      "storefront_purchase_options": "subscription_only"
+    },
+    "title": "T-shirt",
+    "updated_at": "2019-11-07T14:04:52"
+  },
+  "webhook": {
+     "id":6,
+     "address":"https://request.in/foo",
+     "topic":"order/create"
   },
   "address":{
     "id":3411137,
@@ -407,6 +447,30 @@ module Recharge
     extend HTTPRequest::Create
   end
 
+  class Metafield
+    PATH = "/metafields"
+    SINGLE = "metafield"
+    COLLECTION = "metafields"
+
+    extend HTTPRequest::Count
+    extend HTTPRequest::Create
+    extend HTTPRequest::Delete
+    extend HTTPRequest::Get
+    extend HTTPRequest::List
+
+    include Persistable
+
+    def self.list(owner, options = nil)
+      raise ArgumentError, "owner resource required" if owner.nil? || owner.to_s.strip.empty?
+      super (options||{}).merge(:owner_resource => owner)
+    end
+
+    def delete
+      self.class.delete(id)
+      true
+    end
+  end
+
   class Order
     PATH = "/orders".freeze
     SINGLE = "order".freeze
@@ -430,6 +494,16 @@ module Recharge
       path = join(id, "update_shopify_variant", old_variant_id)
       instance(POST(path, :new_shopify_variant_id => new_varient_id))
     end
+  end
+
+  class Product
+    PATH = "/products".freeze
+    SINGLE = "product".freeze
+    COLLECTION = "products".freeze
+
+    extend HTTPRequest::Count
+    extend HTTPRequest::Get
+    extend HTTPRequest::List
   end
 
   class Subscription
