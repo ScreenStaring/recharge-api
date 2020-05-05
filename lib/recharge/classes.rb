@@ -443,8 +443,29 @@ module Recharge
   class Discount
     PATH = "/discounts".freeze
     SINGLE = "discount".freeze
+    COLLECTION = "discounts"
 
+    extend HTTPRequest::Count
     extend HTTPRequest::Create
+    extend HTTPRequest::Delete
+    extend HTTPRequest::Get
+    extend HTTPRequest::List
+    extend HTTPRequest::Update
+
+    include Persistable
+
+    def self.count(options = nil)
+      super(convert_date_params(options, :created_at_max, :created_at_min, :date_min, :date_max))
+    end
+
+    def self.list(options = nil)
+      super(convert_date_params(options, :created_at, :created_at_max, :updated_at, :updated_at_max))
+    end
+
+    def delete
+      self.class.delete(id)
+      true
+    end
   end
 
   class Metafield
