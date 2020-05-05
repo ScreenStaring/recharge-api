@@ -25,8 +25,6 @@ RSpec.shared_examples_for "a method that requires an id" do
   end
 end
 
-
-
 RSpec::Matchers.define :define_const do |name|
   match do |klass|
     begin

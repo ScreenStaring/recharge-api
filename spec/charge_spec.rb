@@ -50,7 +50,9 @@ RSpec.describe Recharge::Charge do
   describe ".list" do
     %i[date_min date_max].each do |param|
       it "filters on #{param}" do
-        charge = described_class.new(:id => 1)
+        # set has_uncommited_changes as charge.to_h => { "has_uncommited_changes" => nil }
+        # and Charge.new("has_uncommited_changes" => nil).has_uncommited_changes == false
+        charge = described_class.new(:id => 1, :has_uncommited_changes => false)
 
         TIME_INSTANCES.each do |time|
           expect(described_class).to receive(:GET)
@@ -75,6 +77,7 @@ RSpec.describe Recharge::Charge do
       data = {
         "id" => 1,
         "address_id" => 2,
+        "analytics_data" => { "foo" => 999 },
         "billing_address" => {
           "city" => "NYC",
           "address1" => "555 5th ave",
@@ -108,7 +111,9 @@ RSpec.describe Recharge::Charge do
         "customer_id" => 3,
         "first_name" => "sshaw",
         "last_name" => "xxx",
+        "has_uncommited_changes" => false,
         "line_items" => [
+          "images" => { "small" => "http://example.com/foo.webp" },
           "subscription_id" => 9999,
           "quantity" => 10,
           "shopify_product_id" => "90",
@@ -117,21 +122,38 @@ RSpec.describe Recharge::Charge do
           "title" => "Foo Product",
           "variant_title" => "Foo Variant",
           "vendor" => "Plug Depot",
-           "grams" => 453,
-           "price" => 100.0,
-           "properties" => [
+          "grams" => 453,
+          "price" => 100.0,
+          "properties" => [
              {
                "name" => "x",
                "value" => "y"
              }
            ]
         ],
+        "note" => "noted",
+        "note_attributes" => [:a => 123],
         "processed_at" => "2017-01-01T00:00:00",
+        "processor_name" => "sshaw",
         "scheduled_at" => "2014-01-05T00:00:00",
         "shipments_count" => 4,
         "shopify_order_id" => "5",
+        "shipping_lines" => [
+          "price" => "0.00",
+          "code" => "Standard Shipping",
+          "title" => "Standard Shipping"
+        ],
         "status" => "SUCCESS",
         "total_price" => 1.0,
+        "tax_lines" => 0,
+        "total_discounts" => "0.0",
+        "total_line_items_price" => "12.00",
+        "total_price" => "12.00",
+        "total_refunds" => nil,
+        "total_tax" => 0,
+        "total_weight" => 4536,
+        "transaction_id" => "XX_XX",
+        "type" => "RECURRING",
         "updated_at" => "2017-01-03T00:00:00"
       }
 

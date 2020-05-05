@@ -3,8 +3,8 @@ require "uri"
 require "json"
 
 # For iso8601
-require "date"
-require "time"
+#require "date"
+#require "time"
 
 module Recharge
   module HTTPRequest # :nodoc:
