@@ -1,0 +1,7 @@
+2020-05-05  v0.0.2
+--------------------
+* Fix for HTTP 204 responses
+* Add support for Metafield
+* Add limited support for Product and Discount
+* Add additional properties to Subscription and Charge
+* Add support for setting the API key via the RECHARGE_API_KEY env var

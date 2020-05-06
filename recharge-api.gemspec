@@ -18,6 +18,12 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.metadata      = {
+    "changelog_uri" => "https://github.com/ScreenStaring/recharge-api/blob/master/Changes",
+    "bug_tracker_uri" => "https://github.com/ScreenStaring/recharge-api/issues",
+    "documentation_uri" => "http://rdoc.info/gems/recharge-api",
+    "source_code_uri"  => "https://github.com/ScreenStaring/recharge-api",
+  }
 
   spec.add_dependency "class2", "~> 0.3.0"
   # Keep this until we can upgrade class2
