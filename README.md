@@ -17,6 +17,9 @@ Bundler:
 
 ## Usage
 
+An API key is required. The key can be set via `ReCharge.api_key` or via the `RECHARGE_API_KEY`
+environment variable.
+
 ```rb
 require "recharge"
 
