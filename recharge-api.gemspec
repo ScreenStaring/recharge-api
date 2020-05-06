@@ -24,6 +24,6 @@ Gem::Specification.new do |spec|
   # We don't upgrade yet because versions > 3 default to Symbol keys
   spec.add_dependency "activesupport", "< 6"
   spec.add_development_dependency "webmock", "~> 3.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
