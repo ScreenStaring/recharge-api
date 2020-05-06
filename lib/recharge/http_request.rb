@@ -66,7 +66,8 @@ module Recharge
 
       connection.start do |http|
         res = http.request(req)
-        data = res["Content-Type"] == "application/json" ? parse_json(res.body) : {}
+        # API returns 204 but content-type header is set to application/json so check body
+        data = res.body && res["Content-Type"] == "application/json" ? parse_json(res.body) : {}
         data["meta"] = { "id" => res["X-Request-Id"], "limit" => res["X-Recharge-Limit"] }
 
         return data if res.code[0] == "2" && !data["warning"] && !data["error"]
