@@ -1,3 +1,8 @@
+2020-11-27  v0.0.3
+--------------------
+* Fix HTTP requests so that they're thread-safe
+* Fix Discount#value; it's a Float not an Integer
+
 2020-05-05  v0.0.2
 --------------------
 * Fix for HTTP 204 responses
