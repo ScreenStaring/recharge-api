@@ -32,7 +32,7 @@ RSpec.describe Recharge::Order do
         "email" => "s@example.com",
         "payment_processor" => "4 much",
         "address_is_active" => 1,
-        "is_prepaid" => 0,
+        "is_prepaid" => false,
         "line_items" => [],
         "total_price" => 100.0,
         "shipping_address" => [],

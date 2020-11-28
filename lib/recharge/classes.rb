@@ -164,7 +164,7 @@ class2 "Recharge", JSON.parse(<<-END) do
      "email":"mike@gmail.com",
      "payment_processor":"stripe",
      "address_is_active":1,
-     "is_prepaid":0,
+     "is_prepaid":false,
      "line_items":[
         {
            "subscription_id":10101,
