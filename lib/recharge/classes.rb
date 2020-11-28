@@ -262,7 +262,7 @@ class2 "Recharge", JSON.parse(<<-END) do
   "discount":{
     "id": 3748296,
     "code": "Discount1",
-    "value": 12,
+    "value": 12.5,
     "ends_at": "2019-12-15T00:00:00",
     "starts_at": "2018-05-16T00:00:00",
     "status": "enabled",
