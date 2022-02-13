@@ -88,6 +88,13 @@ For example, to create a hook run the following:
 rake recharge:hooks:create RECHARGE_API_KEY=YOURKEY HOOK=subscription/created CALLBACK=https://example.com/callback
 ```
 
+## See Also
+
+- [Shopify Development Tools](https://github.com/ScreenStaring/shopify-dev-tools) - Assists with the development and/or maintenance of Shopify apps and stores
+- [Shopify ID Export](https://github.com/ScreenStaring/shopify_id_export/) - Dump Shopify product and variant IDs —along with other identifiers— to a CSV or JSON file
+- [`ShopifyAPI::GraphQL::Tiny`](https://github.com/ScreenStaring/shopify_api-graphql-tiny) - Lightweight, no-nonsense, Shopify GraphQL Admin API client with built-in retry
+- [Shopify API Retry](https://github.com/ScreenStaring/shopify_api_retry) -  retry requests if rate-limited or other errors occur. Works with the REST and GraphQL APIs.
+
 ## License
 
 Released under the MIT License: www.opensource.org/licenses/MIT
