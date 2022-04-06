@@ -14,7 +14,7 @@ class2 "Recharge", JSON.parse(<<-END) do
         "next_charge_scheduled_at":"2017-04-01T00:00:00",
         "cancelled_at":null,
         "product_title":"Sumatra Coffee",
-        "price":12,
+        "price":12.0,
         "quantity":1,
         "status":"ACTIVE",
         "shopify_product_id":1255183683,
