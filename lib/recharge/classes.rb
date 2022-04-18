@@ -26,7 +26,7 @@ class2 "Recharge", JSON.parse(<<-END) do
         "is_prepaid": false,
         "max_retries_reached": 0,
         "product_title":"Sumatra Coffee",
-        "price":12,
+        "price":12.0,
         "quantity":1,
         "recharge_product_id": 518676,
         "status":"ACTIVE",
