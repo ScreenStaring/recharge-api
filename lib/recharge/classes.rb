@@ -257,6 +257,20 @@ class2 "Recharge", JSON.parse(<<-END) do
     "zip":"90025",
     "company":"bootstrap",
     "phone":"3103103101",
+    "original_shipping_lines": [
+      {
+        "code": "Standard Shipping (4-7 Days)",
+        "price": "10.00",
+        "title": "Standard Shipping (4-7 Days)"
+      }
+    ],
+    "shipping_lines_override": [
+       {
+          "code": "Free Shipping",
+          "price": "0.00",
+          "title": "Free Shipping"
+       }
+    ],
     "country":"United States"
   },
   "discount":{
