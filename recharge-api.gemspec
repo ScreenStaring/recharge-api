@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
   # Need this temporarily for deep_stringify_keys! until we break to_h String key return value
   spec.add_dependency "activesupport", "< 8"
   spec.add_development_dependency "webmock", "~> 3.0"
-  spec.add_development_dependency "rake", ">= 12.3.3"
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 3.0"
 end
