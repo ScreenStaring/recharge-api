@@ -3,6 +3,8 @@
 require "json"
 require "class2"
 require "recharge/http_request"
+require "active_support/core_ext/hash/keys"
+
 
 # For better or worse, this contains properties for 2021-11 and 2021-01 APIs
 class2 "Recharge", JSON.parse(<<-END) do
@@ -352,6 +354,13 @@ END
 
   def meta
     @meta ||= {}
+  end
+
+  # Class2 >= 0.5 uses Symbol keys and we don't (yet) want to break #to_h's signature
+  # Class2 is also not setup so that we can call super
+  alias __og_to_h to_h
+  def to_h
+    __og_to_h.deep_stringify_keys!
   end
 
   private

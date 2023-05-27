@@ -25,10 +25,9 @@ Gem::Specification.new do |spec|
     "source_code_uri"  => "https://github.com/ScreenStaring/recharge-api",
   }
 
-  spec.add_dependency "class2", "~> 0.3.0"
-  # Keep this until we can upgrade class2
-  # We don't upgrade yet because versions > 3 default to Symbol keys
-  spec.add_dependency "activesupport", "< 6"
+  spec.add_dependency "class2", "~> 0.5.0"
+  # Need this temporarily for deep_stringify_keys! until we break to_h String key return value
+  spec.add_dependency "activesupport", "< 8"
   spec.add_development_dependency "webmock", "~> 3.0"
   spec.add_development_dependency "rake", ">= 12.3.3"
   spec.add_development_dependency "rspec", "~> 3.0"

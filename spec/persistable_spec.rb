@@ -4,6 +4,12 @@ describe Recharge::Persistable do
   # Can't use Struct since we need to_h to return String keys
   class2 :foo => %w[id bar] do
     include Recharge::Persistable
+
+    # See comment in classes.rb
+    alias __og_to_h to_h
+    def to_h
+      __og_to_h.deep_stringify_keys!
+    end
   end
 
   describe "#save" do
