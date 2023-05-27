@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "recharge/classes"
 require "recharge/version"
 
@@ -5,6 +7,7 @@ module Recharge
   ENDPOINT = "api.rechargeapps.com".freeze
   PORT = 443
   TOKEN_HEADER = "X-Recharge-Access-Token".freeze
+  VERSION_HEADER = "X-Recharge-Version"
   USER_AGENT = "ReCharge API Client v#{VERSION} (Ruby v#{RUBY_VERSION})"
 
   Error = Class.new(StandardError)
@@ -29,6 +32,8 @@ module Recharge
 
   class << self
     attr_accessor :api_key
+    # Defaults to your account's API settings
+    attr_accessor :api_version
     # If +true+ output HTTP request/response to stderr. Can also be an +IO+ instance to output to.
     attr_accessor :debug
   end

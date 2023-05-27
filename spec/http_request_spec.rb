@@ -26,6 +26,17 @@ RSpec.describe Recharge::HTTPRequest do
       end
     end
 
+    after { ReCharge.api_version = nil }
+
+    # FIXME: shared example
+    it "uses the configured specified API version" do
+      # Not a real version, FYI
+      ReCharge.api_version = "2022-01-01"
+
+      @o.get("/foo")
+      expect(WebMock).to have_requested(:get, "#@endpoint/foo").with(:headers => @headers.merge("X-Recharge-Version" => "2022-01-01"))
+    end
+
     it "generates a GET request to the given path" do
       @o.get("/foo")
       expect(WebMock).to have_requested(:get, "#@endpoint/foo").with(:headers => @headers)

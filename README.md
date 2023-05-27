@@ -65,6 +65,14 @@ end
 
 For complete documentation refer to the API docs: http://rdoc.info/gems/recharge-api
 
+### Setting the ReCharge API Version
+
+Defaults to your account's API settings but can be overridden via:
+
+```rb
+ReCharge.api_version = "2021-01"
+```
+
 ## Rake Tasks for Webhook Management
 
 Add the following to your `Rakefile`:
