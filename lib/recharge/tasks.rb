@@ -6,6 +6,7 @@ namespace :recharge do
     task :_setup_recharge do
       abort "RECHARGE_API_KEY required" unless ENV["RECHARGE_API_KEY"]
       ReCharge.api_key = ENV["RECHARGE_API_KEY"]
+      ReCharge.api_version = ENV["RECHARGE_API_VERSION"] if ENV["RECHARGE_API_VERSION"]
     end
 
     desc "List webhooks for RECHARGE_API_KEY"

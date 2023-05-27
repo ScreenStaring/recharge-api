@@ -96,6 +96,8 @@ For example, to create a hook run the following:
 rake recharge:hooks:create RECHARGE_API_KEY=YOURKEY HOOK=subscription/created CALLBACK=https://example.com/callback
 ```
 
+You can set the API version via `RECHARGE_API_VERSION`.
+
 ## See Also
 
 - [Shopify Development Tools](https://github.com/ScreenStaring/shopify-dev-tools) - Assists with the development and/or maintenance of Shopify apps and stores
