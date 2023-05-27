@@ -1,6 +1,6 @@
 # ReCharge API Client
 
-[![Build Status](https://travis-ci.org/ScreenStaring/recharge-api.svg?branch=master)](https://travis-ci.org/ScreenStaring/recharge-api)
+[![Build Status](https://github.com/ScreenStaring/recharge-api/workflows/CI/badge.svg)](https://github.com/ScreenStaring/recharge-api/actions/workflows/ci.yml)
 
 Ruby client for [ReCharge Payments'](https://rechargepayments.com/developers)
 recurring payments API for Shopify.
