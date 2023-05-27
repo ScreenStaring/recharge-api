@@ -4,6 +4,7 @@ require "json"
 require "class2"
 require "recharge/http_request"
 
+# For better or worse, this contains properties for 2021-11 and 2021-01 APIs
 class2 "Recharge", JSON.parse(<<-END) do
 {
   "subscription":
@@ -116,7 +117,13 @@ class2 "Recharge", JSON.parse(<<-END) do
       "total_tax": 0,
       "total_weight": 4536,
       "transaction_id": "cch_1Du2QpJ2iqHvZRd18RyqoPvc",
-      "type": "RECURRING"
+      "type": "RECURRING",
+      "external_order_id": {
+         "ecommerce": "Charge-It-2-da-Game"
+       },
+       "external_transaction_id": {
+         "payment_processor": 999999
+       }
     },
   "customer":
      {
@@ -142,7 +149,11 @@ class2 "Recharge", JSON.parse(<<-END) do
         "status": "FOO",
         "stripe_customer_token": "123123",
         "paypal_customer_token": "123123",
-        "braintree_customer_token": "123123"
+        "braintree_customer_token": "123123",
+        "external_customer_id": {
+          "ecommerce": "382028302"
+        },
+        "hash": "18819267b1f9095be98f13a8"
     },
   "order": {
      "id":7271806,
@@ -173,7 +184,33 @@ class2 "Recharge", JSON.parse(<<-END) do
            "variant_title":"Sumatra",
            "title":"Sumatra Latte",
            "quantity":1,
-           "properties":[]
+           "properties":[],
+           "purchase_item_id": 365974856,
+           "external_inventory_policy": "decrement_obeying_policy",
+           "external_product_id": {},
+           "external_variant_id": {},
+           "grams": 454,
+           "images": {},
+           "original_price": "10.00",
+           "properties": [],
+           "purchase_item_type": "subscription",
+           "sku": "TOM0001",
+           "tax_due": "3.80",
+           "tax_lines": [
+             {
+               "price": "0.993",
+               "rate": "0.0725",
+               "unit_price": "0.331",
+               "title": "Highest taxed state in the nation: California!"
+             }
+           ],
+           "taxable": true,
+           "taxable_amount": "10.00",
+           "title": "Shirt bundle",
+           "total_price": "43.80",
+           "unit_price": "10.00",
+           "unit_price_includes_tax": false,
+           "variant_title": "Blue t-shirts"
         }
      ],
      "total_price":18.00,
@@ -200,7 +237,9 @@ class2 "Recharge", JSON.parse(<<-END) do
         "company":"bootstrap",
         "phone":"3103103101",
         "country":"United States"
-     }
+     },
+     "customer": {},
+     "note": "Noted!"
   },
   "metafield": {
     "created_at": "2018-11-05T12:59:30",
@@ -239,7 +278,19 @@ class2 "Recharge", JSON.parse(<<-END) do
       "storefront_purchase_options": "subscription_only"
     },
     "title": "T-shirt",
-    "updated_at": "2019-11-07T14:04:52"
+    "updated_at": "2019-11-07T14:04:52",
+    "description": "ScreenStaring, that's what we do!",
+    "external_product_id": "123123",
+    "external_created_at": "2019-11-07T14:04:52",
+    "external_updated_at": "2019-11-07T14:04:52",
+    "brand": "ScreenStaring",
+    "options": [
+      {
+        "name": "Size",
+        "position": 0,
+        "values": []
+      }
+    ]
   },
   "webhook": {
      "id":6,

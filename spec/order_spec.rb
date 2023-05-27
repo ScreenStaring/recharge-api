@@ -36,7 +36,10 @@ RSpec.describe Recharge::Order do
         "line_items" => [],
         "total_price" => 100.0,
         "shipping_address" => [],
-        "billing_address" => []
+        "billing_address" => [],
+        # 2021-11 API
+        "note" => "Noted",
+        "customer" => {}
       }
 
       order = described_class.new(data)

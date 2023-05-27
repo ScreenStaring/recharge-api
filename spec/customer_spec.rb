@@ -38,7 +38,8 @@ RSpec.describe Recharge::Customer do
         "status" => "X",
         "stripe_customer_token" => "stripetok",
         "paypal_customer_token" => "pptok",
-        "braintree_customer_token" => "bttok"
+        "braintree_customer_token" => "bttok",
+        "external_customer_id" => { "ecommerce" => "FooFoo" }
       }
 
       sub = described_class.new(data)

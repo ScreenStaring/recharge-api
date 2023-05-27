@@ -154,7 +154,9 @@ RSpec.describe Recharge::Charge do
         "total_weight" => 4536,
         "transaction_id" => "XX_XX",
         "type" => "RECURRING",
-        "updated_at" => "2017-01-03T00:00:00"
+        "updated_at" => "2017-01-03T00:00:00",
+        "external_order_id" => { "ecommerce" => "Charge-It-2-da-Game" },
+        "external_transaction_id" => { "payment_processor" => 123 }
       }
 
       charge = described_class.new(data)
